@@ -1,0 +1,373 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "ved-github-dev2"
+		},
+		"AzureBlobStorage1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage1'"
+		},
+		"AzureBlobStorage2_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage2'"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "DelimitedText2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DelimitedText3",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-11-26T13:57:20Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DelimitedText2')]",
+				"[concat(variables('factoryId'), '/datasets/DelimitedText3')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "employees05.csv",
+						"container": "source-dev"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "1",
+						"type": "String"
+					},
+					{
+						"name": "Davidovits",
+						"type": "String"
+					},
+					{
+						"name": "adavidovitsk@sf_tuts.com",
+						"type": "String"
+					},
+					{
+						"name": "7571 New Castle Circle",
+						"type": "String"
+					},
+					{
+						"name": "Meniko",
+						"type": "String"
+					},
+					{
+						"name": "5/3/2017",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage2",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "skv_individual_202211210220_001 (2).csv",
+						"container": "source1"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Message ID",
+						"type": "String"
+					},
+					{
+						"name": "Telemarketer ID",
+						"type": "String"
+					},
+					{
+						"name": "Telemarketer Name",
+						"type": "String"
+					},
+					{
+						"name": "PE DLT ID",
+						"type": "String"
+					},
+					{
+						"name": "Template ID",
+						"type": "String"
+					},
+					{
+						"name": "EXT ID",
+						"type": "String"
+					},
+					{
+						"name": "Msisdn",
+						"type": "String"
+					},
+					{
+						"name": "Type of Message (Type 1/Type 2/Type 3)",
+						"type": "String"
+					},
+					{
+						"name": "Billing Type",
+						"type": "String"
+					},
+					{
+						"name": "Message Category (Promotional/Service Explicit/Service Implicit/Transactional)",
+						"type": "String"
+					},
+					{
+						"name": "Message segment (Number of short messages as per character count)",
+						"type": "String"
+					},
+					{
+						"name": "SKV Account Name (TM connecting to SKV)",
+						"type": "String"
+					},
+					{
+						"name": "Submit Time",
+						"type": "String"
+					},
+					{
+						"name": "Header/CLI",
+						"type": "String"
+					},
+					{
+						"name": "DLT Request TS",
+						"type": "String"
+					},
+					{
+						"name": "DLT Response TS",
+						"type": "String"
+					},
+					{
+						"name": "Scrubbing Token Number",
+						"type": "String"
+					},
+					{
+						"name": "Scrub Status",
+						"type": "String"
+					},
+					{
+						"name": "DLT Error Code",
+						"type": "String"
+					},
+					{
+						"name": "DLT Error Description",
+						"type": "String"
+					},
+					{
+						"name": "Mavenir Submit_sm TS",
+						"type": "String"
+					},
+					{
+						"name": "Mavenir Account Name",
+						"type": "String"
+					},
+					{
+						"name": "Mavenir Submit_sm_resp TS",
+						"type": "String"
+					},
+					{
+						"name": "Delivery Time",
+						"type": "String"
+					},
+					{
+						"name": "Submission Status",
+						"type": "String"
+					},
+					{
+						"name": "Delivery Status",
+						"type": "String"
+					},
+					{
+						"name": "ABMS Errorcode",
+						"type": "String"
+					},
+					{
+						"name": "ABMS Error Description",
+						"type": "String"
+					},
+					{
+						"name": "SMS PDU",
+						"type": "String"
+					},
+					{
+						"name": "DLT External ID",
+						"type": "String"
+					},
+					{
+						"name": "Header Category",
+						"type": "String"
+					},
+					{
+						"name": "PSU Header",
+						"type": "String"
+					},
+					{
+						"name": "Platform",
+						"type": "String"
+					},
+					{
+						"name": "Zone",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText3')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage2",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "ved-destination1"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureBlobStorage1_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage2')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureBlobStorage2_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
