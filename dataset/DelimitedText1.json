@@ -1,0 +1,49 @@
+{
+	"name": "DelimitedText1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "employees05.csv",
+				"container": "source-dev"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "1",
+				"type": "String"
+			},
+			{
+				"name": "Davidovits",
+				"type": "String"
+			},
+			{
+				"name": "adavidovitsk@sf_tuts.com",
+				"type": "String"
+			},
+			{
+				"name": "7571 New Castle Circle",
+				"type": "String"
+			},
+			{
+				"name": "Meniko",
+				"type": "String"
+			},
+			{
+				"name": "5/3/2017",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

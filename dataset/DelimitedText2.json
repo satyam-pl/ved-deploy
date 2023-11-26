@@ -1,0 +1,161 @@
+{
+	"name": "DelimitedText2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "skv_individual_202211210220_001 (2).csv",
+				"container": "source1"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Message ID",
+				"type": "String"
+			},
+			{
+				"name": "Telemarketer ID",
+				"type": "String"
+			},
+			{
+				"name": "Telemarketer Name",
+				"type": "String"
+			},
+			{
+				"name": "PE DLT ID",
+				"type": "String"
+			},
+			{
+				"name": "Template ID",
+				"type": "String"
+			},
+			{
+				"name": "EXT ID",
+				"type": "String"
+			},
+			{
+				"name": "Msisdn",
+				"type": "String"
+			},
+			{
+				"name": "Type of Message (Type 1/Type 2/Type 3)",
+				"type": "String"
+			},
+			{
+				"name": "Billing Type",
+				"type": "String"
+			},
+			{
+				"name": "Message Category (Promotional/Service Explicit/Service Implicit/Transactional)",
+				"type": "String"
+			},
+			{
+				"name": "Message segment (Number of short messages as per character count)",
+				"type": "String"
+			},
+			{
+				"name": "SKV Account Name (TM connecting to SKV)",
+				"type": "String"
+			},
+			{
+				"name": "Submit Time",
+				"type": "String"
+			},
+			{
+				"name": "Header/CLI",
+				"type": "String"
+			},
+			{
+				"name": "DLT Request TS",
+				"type": "String"
+			},
+			{
+				"name": "DLT Response TS",
+				"type": "String"
+			},
+			{
+				"name": "Scrubbing Token Number",
+				"type": "String"
+			},
+			{
+				"name": "Scrub Status",
+				"type": "String"
+			},
+			{
+				"name": "DLT Error Code",
+				"type": "String"
+			},
+			{
+				"name": "DLT Error Description",
+				"type": "String"
+			},
+			{
+				"name": "Mavenir Submit_sm TS",
+				"type": "String"
+			},
+			{
+				"name": "Mavenir Account Name",
+				"type": "String"
+			},
+			{
+				"name": "Mavenir Submit_sm_resp TS",
+				"type": "String"
+			},
+			{
+				"name": "Delivery Time",
+				"type": "String"
+			},
+			{
+				"name": "Submission Status",
+				"type": "String"
+			},
+			{
+				"name": "Delivery Status",
+				"type": "String"
+			},
+			{
+				"name": "ABMS Errorcode",
+				"type": "String"
+			},
+			{
+				"name": "ABMS Error Description",
+				"type": "String"
+			},
+			{
+				"name": "SMS PDU",
+				"type": "String"
+			},
+			{
+				"name": "DLT External ID",
+				"type": "String"
+			},
+			{
+				"name": "Header Category",
+				"type": "String"
+			},
+			{
+				"name": "PSU Header",
+				"type": "String"
+			},
+			{
+				"name": "Platform",
+				"type": "String"
+			},
+			{
+				"name": "Zone",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

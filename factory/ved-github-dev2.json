@@ -1,0 +1,9 @@
+{
+	"name": "ved-github-dev2",
+	"location": "eastasia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "d60344e7-b99c-4daf-90ad-b731aff7d6dd",
+		"tenantId": "ce3685eb-9b4e-4652-a942-7ea5cda9e6c0"
+	}
+}
